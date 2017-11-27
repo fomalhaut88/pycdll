@@ -68,7 +68,7 @@ print(result)
 ## How to distribute your Python package that has DLLs in C
 
 Sometimes it's necessary to disribute a Python package with your C-code.
-First you should keep in mind is the package may be installer under different platforms,
+First you should keep in mind is the package may be installed under different platforms,
 so you can't just attach compiled DLLs as data files. Instead you need to compile the DLLs
 during the installation process. With the help of `pycdll` it can be easily done by adding
 a few lines in your `setup.py`. Here is an example.
