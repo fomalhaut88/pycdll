@@ -1,0 +1,1 @@
+int sqr(int n);

@@ -7,5 +7,5 @@ setup(
     version='1.0',
     packages=find_packages(),
     license="",
-    long_description=""
+    long_description=open('README.md').read()
 )

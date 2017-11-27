@@ -16,7 +16,7 @@ class Compiler:
     compiler = 'gcc'
     debug_name = 'debug'
 
-    def __init__(self, c_dir, dll_dir, verbose=True):
+    def __init__(self, c_dir='c', dll_dir='dll', verbose=True):
         self.c_dir = os.path.join(cwd, c_dir)
         self.dll_dir = os.path.join(cwd, dll_dir)
         self.debug = os.path.join(cwd, self.debug_name)
@@ -55,6 +55,14 @@ class Compiler:
     def get_dll(self, clib):
         dllname = self._get_dllname(clib)
         return os.path.join(self.dll_dir, dllname)
+
+    def collect_local_dlls(self):
+        paths = self.get_dlls()
+        local_paths = list(map(
+            lambda path: os.path.relpath(path, cwd),
+            paths
+        ))
+        return local_paths
 
     def _get_cpaths(self, path):
         cpaths = []
