@@ -52,12 +52,13 @@ As the result a file `myclib.so` (or `myclib.dll` if you're working under Window
 For the example above:
 
 ```python
+import os
 import ctypes
-from pycdll.compiler import Compiler
 
-cpl = Compiler(dll_dir='dll')
-dllpath = cpl.get_dll('myclib')
-
+dllpath = os.path.join(
+    os.path.dirname(__file__),
+    'dll/myclib.so'
+)
 dll = ctypes.CDLL(dllpath)
 
 n = ctypes.c_int(5)
