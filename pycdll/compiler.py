@@ -52,10 +52,6 @@ class Compiler:
         ))
         return paths
 
-    def get_dll(self, clib):
-        dllname = self._get_dllname(clib)
-        return os.path.join(self.dll_dir, dllname)
-
     def collect_local_dlls(self):
         paths = self.get_dlls()
         local_paths = list(map(
