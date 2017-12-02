@@ -16,7 +16,7 @@ class Compiler:
     compiler = 'gcc'
     debug_name = 'debug'
 
-    def __init__(self, c_dir='c', dll_dir='dll', verbose=True):
+    def __init__(self, c_dir, dll_dir, verbose=True):
         self.c_dir = os.path.join(cwd, c_dir)
         self.dll_dir = os.path.join(cwd, dll_dir)
         self.debug = os.path.join(cwd, self.debug_name)
@@ -60,6 +60,11 @@ class Compiler:
         ))
         return local_paths
 
+    @classmethod
+    def get_dllpath(cls, dll_dir, clib):
+        dllname = cls._get_dllname(clib)
+        return os.path.join(dll_dir, dllname)
+
     def _get_cpaths(self, path):
         cpaths = []
         for root, dirs, files in os.walk(path):
@@ -69,7 +74,8 @@ class Compiler:
                     cpaths.append(cpath)
         return cpaths
 
-    def _get_dllname(self, clib):
+    @classmethod
+    def _get_dllname(cls, clib):
         dll_ext = 'dll' if sys.platform == 'win32' else 'so'
         return clib + '.' + dll_ext
 

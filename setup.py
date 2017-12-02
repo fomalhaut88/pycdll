@@ -1,11 +1,10 @@
 from distutils.core import setup
-from setuptools import find_packages
 
 
 setup(
     name='pycdll',
     version='1.0',
-    packages=find_packages(),
+    packages=['pycdll'],
     license="",
     long_description=open('README.md').read()
 )
