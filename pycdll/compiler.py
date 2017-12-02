@@ -40,7 +40,7 @@ class Compiler:
                 opaths.append(opath)
 
             # Linking
-            dllname = self._get_dllname(clib)
+            dllname = self.get_dllname(clib)
             dllpath = os.path.join(self.dll_dir, dllname)
             self._link(opaths, dllpath)
 
@@ -58,12 +58,21 @@ class Compiler:
             lambda path: os.path.relpath(path, cwd),
             paths
         ))
+        local_paths = list(filter(
+            lambda path: path.endswith('.so') or path.endswith('.dll'),
+            local_paths
+        ))
         return local_paths
 
     @classmethod
     def get_dllpath(cls, dll_dir, clib):
-        dllname = cls._get_dllname(clib)
+        dllname = cls.get_dllname(clib)
         return os.path.join(dll_dir, dllname)
+
+    @classmethod
+    def get_dllname(cls, clib):
+        dll_ext = 'dll' if sys.platform == 'win32' else 'so'
+        return clib + '.' + dll_ext
 
     def _get_cpaths(self, path):
         cpaths = []
@@ -73,11 +82,6 @@ class Compiler:
                     cpath = os.path.join(root, name)
                     cpaths.append(cpath)
         return cpaths
-
-    @classmethod
-    def _get_dllname(cls, clib):
-        dll_ext = 'dll' if sys.platform == 'win32' else 'so'
-        return clib + '.' + dll_ext
 
     def _compile(self, cpath, opath):
         command = "{compiler} -c -Wall -fPIC {cpath} -o {opath}".format(
